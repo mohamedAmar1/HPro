@@ -5,12 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>From My Heart to Eternity</title>
     <style>
-        /* إعدادات الخلفية العامة - تم تحسين الأداء */
+        /* =========================================
+           1. الإعدادات العامة والخلفية المتدرجة
+           ========================================= */
         body {
             margin: 0;
             padding: 0;
-            height: 100vh;
-            background: radial-gradient(circle at center, #25001a, #05000a);
+            min-height: 100vh;
+            background: linear-gradient(-45deg, #0d0614, #2a0835, #4d1036, #140727);
+            background-size: 400% 400%;
+            animation: gradientBG 20s ease infinite;
+            color: #fff;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -19,7 +24,32 @@
             perspective: 1000px;
         }
 
-        /* حاوية النجوم والأشعة - تم تخفيفها لتبرز القلب */
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* =========================================
+           2. صورة الخلفية الشفافة 
+           ========================================= */
+        .bg-image-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('your-bg-image.jpg'); /* مسار صورة الخلفية */
+            background-size: cover;
+            background-position: center;
+            opacity: 0.15; 
+            z-index: 0; 
+            pointer-events: none; 
+        }
+
+        /* =========================================
+           3. الفضاء والنجوم والأشعة
+           ========================================= */
         .universe-container {
             position: absolute;
             width: 100%;
@@ -30,39 +60,38 @@
             z-index: 1;
         }
 
-        /* أشعة ناعمة جداً وغير مشتتة */
         .light-rays {
             position: absolute;
             width: 140%;
             height: 140%;
             top: -20%;
             left: -20%;
-            background-image: repeating-conic-gradient(from 0deg, transparent 0deg 20deg, rgba(255, 105, 180, 0.02) 20deg 40deg);
-            animation: rotateRays 60s linear infinite;
-            opacity: 0.6;
+            background-image: repeating-conic-gradient(from 0deg, transparent 0deg 20deg, rgba(255, 105, 180, 0.03) 20deg 40deg);
+            animation: rotateRays 80s linear infinite;
         }
 
         @keyframes rotateRays {
             100% { transform: rotate(360deg); }
         }
 
-        /* تحسين أداء النجوم بتبسيط الظلال لتقليل ثقل الموقع */
         .star {
             position: absolute;
             background-color: #fff;
             border-radius: 50%;
-            box-shadow: 0 0 6px #fff, 0 0 12px #ff69b4;
+            box-shadow: 0 0 5px #fff, 0 0 10px #ff8ebf;
             animation: twinkle var(--duration) infinite ease-in-out;
             opacity: 0;
-            will-change: transform, opacity; /* تحسين أداء المتصفح */
+            will-change: transform, opacity;
         }
 
         @keyframes twinkle {
-            0%, 100% { opacity: 0.3; transform: scale(0.8); }
-            50% { opacity: 1; transform: scale(1.2); box-shadow: 0 0 10px #fff, 0 0 20px #ff1a40; }
+            0%, 100% { opacity: 0.2; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); box-shadow: 0 0 8px #fff, 0 0 15px #ff1a40; }
         }
 
-        /* الحاوية الرئيسية (المسرح) */
+        /* =========================================
+           4. المسرح (المربع الذي يحتوي على العناصر)
+           ========================================= */
         .scene {
             position: relative;
             z-index: 10;
@@ -70,23 +99,24 @@
             justify-content: center;
             align-items: center;
             flex-direction: column;
-            padding: 60px 80px;
-            border-radius: 30px;
-            background: rgba(5, 0, 10, 0.75);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+            padding: 70px 90px;
+            border-radius: 35px;
+            background: rgba(10, 2, 15, 0.6);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7);
+            overflow: visible; 
         }
 
-        /* إطار الألوان المتوهج والمتحرك */
         .scene::before {
             content: '';
             position: absolute;
-            top: -3px; left: -3px; right: -3px; bottom: -3px;
-            background: linear-gradient(45deg, #ff1a40, #ff69b4, #b3001e, #ff69b4, #ff1a40);
+            top: -2px; left: -2px; right: -2px; bottom: -2px;
+            background: linear-gradient(45deg, #ff1a40, #900020, #ff69b4, #900020, #ff1a40);
             background-size: 300%;
-            border-radius: 33px;
+            border-radius: 37px;
             z-index: -1;
-            animation: borderGlow 6s linear infinite;
+            animation: borderGlow 8s linear infinite;
+            opacity: 0.7;
         }
 
         @keyframes borderGlow {
@@ -95,64 +125,50 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* تصميم حاوية القلب */
+        /* =========================================
+           5. القلب النابض وحركته
+           ========================================= */
         .heart-wrapper {
             position: relative;
             width: 200px;
             height: 200px;
             cursor: pointer;
-            transition: transform 0.3s ease;
+            transition: transform 0.4s ease;
             z-index: 5;
         }
 
         .heart-wrapper:hover {
-            transform: scale(1.05);
+            transform: scale(1.08);
         }
 
         .heart-half {
             position: absolute;
             width: 100px;
             height: 160px;
-            background: linear-gradient(to bottom, #ff1a40, #b3001e);
+            background: linear-gradient(to bottom, #ff1e45, #a3001c);
             border-radius: 100px 100px 0 0;
-            box-shadow: 0 0 25px rgba(255, 26, 64, 0.6);
+            box-shadow: 0 0 30px rgba(255, 30, 69, 0.5);
             transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .heart-left {
-            left: 100px;
-            transform-origin: 0% 100%;
-            transform: rotate(-45deg);
-        }
+        .heart-left { left: 100px; transform-origin: 0% 100%; transform: rotate(-45deg); }
+        .heart-right { left: 0; transform-origin: 100% 100%; transform: rotate(45deg); }
 
-        .heart-right {
-            left: 0;
-            transform-origin: 100% 100%;
-            transform: rotate(45deg);
-        }
+        .heart-wrapper.open .heart-left { transform: rotate(-75deg) translate(-45px, -20px); opacity: 0.6; }
+        .heart-wrapper.open .heart-right { transform: rotate(75deg) translate(45px, -20px); opacity: 0.6; }
 
-        /* حركة فتح القلب */
-        .heart-wrapper.open .heart-left {
-            transform: rotate(-75deg) translate(-45px, -20px);
-            opacity: 0.7;
-        }
-
-        .heart-wrapper.open .heart-right {
-            transform: rotate(75deg) translate(45px, -20px);
-            opacity: 0.7;
-        }
-
-        /* نبض القلب */
         .heart-wrapper.pulse {
-            animation: heartbeat 1.5s infinite ease-in-out;
+            animation: heartbeat 1.8s infinite ease-in-out;
         }
 
         @keyframes heartbeat {
             0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.06); }
+            50% { transform: scale(1.05); }
         }
 
-        /* حاوية الاسم الجديد المقسم لحروف */
+        /* =========================================
+           6. الاسم (حروف متطايرة)
+           ========================================= */
         .name-container {
             position: absolute;
             display: flex;
@@ -162,35 +178,122 @@
             z-index: 20;
         }
 
-        /* تأثير حروف الاسم المتطايرة والمتموجة */
         .letter {
             display: inline-block;
-            font-size: 4.5rem;
+            font-size: 4.8rem;
             font-weight: bold;
             color: #ffffff;
-            text-shadow: 0 0 15px #ff69b4, 0 0 30px #ff1a40;
+            text-shadow: 0 0 15px #ff69b4, 0 0 25px #ff1a40;
             opacity: 0;
             transform: scale(0) translateY(-100px) rotate(720deg);
             transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
-        /* فئة يتم إضافتها عبر الـ JS لجعل الحروف تظهر بشكل متموج */
         .letter.animate-in {
             opacity: 1;
             transform: scale(1) translateY(0) rotate(0deg);
         }
 
-        /* فئة عند سحب الحروف لداخل القلب واختفائها */
         .letter.animate-out {
             opacity: 0;
             transform: scale(0) translateY(60px) rotate(-180deg);
             transition: all 0.7s cubic-bezier(0.6, -0.28, 0.735, 0.045);
         }
 
-        /* الرسالة الختامية */
+        /* =========================================
+           7. الحاوية الجديدة للصورة (مكبرة + إطار RGB مضيء)
+           ========================================= */
+        #postClickImageContainer {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            /* تم التكبير لـ 360 بكسل */
+            width: 360px;
+            height: 360px;
+            transform: translate(-50%, -50%) scale(0);
+            border-radius: 20px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+            z-index: 15;
+            
+            /* خصائص إطار الـ RGB */
+            padding: 5px; /* سمك الإطار الملون */
+            box-sizing: border-box;
+            background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+            background-size: 400%;
+            animation: rgbPan 4s linear infinite;
+        }
+
+        /* التوهج (Blur) الخاص بإطار الـ RGB */
+        #postClickImageContainer::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: inherit; /* يأخذ نفس ألوان الـ RGB */
+            background-size: inherit;
+            animation: inherit; /* يأخذ نفس الحركة */
+            border-radius: inherit;
+            filter: blur(20px); /* نسبة الـ Blur */
+            z-index: -1;
+            opacity: 0.9;
+        }
+
+        @keyframes rgbPan {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* تنسيق الصورة لتملأ المربع بالكامل */
+        #postClickImageContainer img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 15px; /* حواف الصورة الداخلية */
+            display: block;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* الكابشن (كلمة الفاتحة وتاريخها) */
+        .image-caption {
+            position: absolute;
+            bottom: 20px; /* تم رفعها قليلاً لتتناسب مع التكبير */
+            left: 0;
+            width: 100%;
+            text-align: center;
+            font-size: 2.2rem; /* تكبير الخط */
+            font-weight: 900;
+            /* ألوان متدرجة متحركة للنص */
+            background: linear-gradient(90deg, #ff1a40, #ff69b4, #ffcf33, #0edf73, #0ff2c1, #ff1a40);
+            background-size: 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: textGradient 3s linear infinite;
+            z-index: 16;
+            /* ظل أسود قوي قليلاً ليجعل الكلمة واضحة أياً كانت ألوان صورتك */
+            filter: drop-shadow(0px 3px 6px rgba(0,0,0,0.9));
+        }
+
+        @keyframes textGradient {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+
+        /* حالة الظهور */
+        #postClickImageContainer.image-reveal {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        /* =========================================
+           8. الرسائل الختامية
+           ========================================= */
         .final-message {
-            font-size: 1.8rem;
-            color: #ffe6eb;
+            font-size: 1.6rem;
+            color: #ffdce5;
             font-style: italic;
             text-align: center;
             opacity: 0;
@@ -198,13 +301,14 @@
             overflow: hidden;
             transform: translateY(20px);
             transition: all 1s ease;
-            text-shadow: 0 0 15px rgba(255, 230, 235, 0.8);
+            text-shadow: 0 0 12px rgba(255, 230, 235, 0.6);
+            letter-spacing: 1px;
         }
 
         .final-message.reveal {
             opacity: 1;
             height: auto;
-            margin-top: 40px;
+            margin-top: 30px;
             transform: translateY(0);
         }
     </style>
@@ -212,6 +316,9 @@
 <body>
 
     <audio id="bgMusic" src="audio.mp3" loop></audio>
+    <audio id="secondMusic" src="ertahtelk.mp3"></audio>
+
+    <div class="bg-image-overlay"></div>
 
     <div class="universe-container" id="universeContainer">
         <div class="light-rays"></div>
@@ -225,107 +332,135 @@
 
         <div class="name-container" id="nameContainer"></div>
 
-        <div class="final-message" id="finalMessage">From my heart to eternity, Habiba.</div>
-        <div class="final-message" id="finalMessage">Eng Mohammed Ammar</div>
+        <div id="postClickImageContainer">
+            <img src="back.jpeg" alt="Second Image">
+            <div class="image-caption">Elfatha 23/6/2026</div>
+        </div>
+
+        <div class="final-message">From my heart to eternity, Habiba.</div>
+        <div class="final-message">Mohammed Ammar</div>
     </div>
 
     <script>
-        // 1. توليد النجوم بأداء محسن وسلس (تقليل العدد لـ 60 نجمة سريعة وخفيفة)
+        // توليد النجوم
         const universeContainer = document.getElementById('universeContainer');
-        const starCount = 60;
+        const starCount = 65;
 
         for (let i = 0; i < starCount; i++) {
             const star = document.createElement('div');
             star.classList.add('star');
-            const size = Math.random() * 3 + 1.5;
+            const size = Math.random() * 3 + 1;
             star.style.width = `${size}px`;
             star.style.height = `${size}px`;
             star.style.top = `${Math.random() * 100}%`;
             star.style.left = `${Math.random() * 100}%`;
-            star.style.setProperty('--duration', `${Math.random() * 2 + 1.5}s`);
+            star.style.setProperty('--duration', `${Math.random() * 2 + 2}s`);
             star.style.animationDelay = `${Math.random() * 3}s`;
             universeContainer.appendChild(star);
         }
 
-        // 2. إعدادات الاسم والحركات التكرارية
+        // تعريف العناصر
         const heartWrapper = document.getElementById('heartWrapper');
         const nameContainer = document.getElementById('nameContainer');
-        const finalMessage = document.getElementById('finalMessage');
+        const finalMessages = document.querySelectorAll('.final-message');
+        const postClickImageContainer = document.getElementById('postClickImageContainer');
         const bgMusic = document.getElementById('bgMusic');
+        const secondMusic = document.getElementById('secondMusic');
 
-        const nameText = "Habiba";
-        let isAnimating = false; // يمنع الضغط فقط أثناء سير حركة الـ 10 ثوانٍ
+        const nameText = "Habiba  Helal";
+        let isAnimating = false;
+        let clickCount = 0;
+        let resetTimer; // متغير لتخزين مؤقت الـ 40 ثانية
 
-        // دالة لبناء الحروف وتطييرها
+        // دالة لإعادة الموقع لنقطة البداية
+        function resetSiteToBeginning() {
+            postClickImageContainer.classList.remove('image-reveal');
+            finalMessages.forEach(msg => msg.classList.remove('reveal'));
+            if (secondMusic) {
+                secondMusic.pause();
+                secondMusic.currentTime = 0;
+            }
+            clickCount = 0;
+        }
+
         function triggerNameAnimation() {
-            nameContainer.innerHTML = ''; // تنظيف الحروف القديمة
-            
-            // تحويل النص إلى حروف منفصلة داخل سبانات Spans
+            nameContainer.innerHTML = '';
             nameText.split('').forEach((char, index) => {
                 const span = document.createElement('span');
-                span.textContent = char;
+                if(char === ' ') {
+                    span.innerHTML = '&nbsp;';
+                } else {
+                    span.textContent = char;
+                }
                 span.classList.add('letter');
                 nameContainer.appendChild(span);
 
-                // إظهار الحروف بتأثير موجي متتالي (Delay بسيط بين كل حرف وحرف)
                 setTimeout(() => {
                     span.classList.add('animate-in');
-                }, index * 120); // 120 مللي ثانية بين كل حرف لتعطي مظهر رائع
+                }, index * 120);
             });
         }
 
-        // دالة لإخفاء الحروف لداخل القلب
         function removeNameAnimation() {
             const letters = document.querySelectorAll('.letter');
             letters.forEach((span, index) => {
                 setTimeout(() => {
                     span.classList.remove('animate-in');
                     span.classList.add('animate-out');
-                }, index * 80); // دخول تدريجي سريع للقلب
+                }, index * 80);
             });
         }
 
-        // حدث الضغط على القلب (قابل للتكرار الآن)
+        // التفاعل مع النقرات
         heartWrapper.addEventListener('click', () => {
-            if (isAnimating) return; // يمنع التخريب إذا كانت الحركة تعمل بالفعل
+            if (isAnimating) return;
             isAnimating = true;
+            clickCount++;
 
-            // تشغيل الموسيقى
-            bgMusic.play().catch(() => {});
+            clearTimeout(resetTimer);
 
-            // إخفاء الرسالة الختامية القديمة إذا كانت ظاهرة لتهيئة المشهد من جديد
-            finalMessage.classList.remove('reveal');
+            finalMessages.forEach(msg => msg.classList.remove('reveal'));
+            postClickImageContainer.classList.remove('image-reveal');
 
-            // فتح القلب
             heartWrapper.classList.remove('pulse');
             heartWrapper.classList.add('open');
 
-            // تشغيل حركة الحروف المتطايرة الأنيقة
             setTimeout(() => {
                 triggerNameAnimation();
             }, 400);
 
-            // بعد 10 ثوانٍ كاملة: تبدأ مرحلة العودة والإغلاق
+            if (clickCount >= 2) {
+                bgMusic.pause();
+                bgMusic.currentTime = 0; 
+                if (secondMusic) secondMusic.play().catch(() => {});
+            } else {
+                bgMusic.play().catch(() => {});
+            }
+
             setTimeout(() => {
-                // سحب الحروف لداخل القلب
                 removeNameAnimation();
 
-                // إغلاق القلب بعد اختفاء الحروف تماماً
                 setTimeout(() => {
                     heartWrapper.classList.remove('open');
                     
                     setTimeout(() => { 
                         heartWrapper.classList.add('pulse'); 
-                        isAnimating = false; // هنا نفتح الإمكانية للمستخدم ليضغط مرة أخرى!
+                        isAnimating = false;
+                        
+                        if (clickCount >= 2) {
+                            postClickImageContainer.classList.add('image-reveal');
+                            
+                            resetTimer = setTimeout(() => {
+                                resetSiteToBeginning();
+                            }, 40000); 
+                        }
                     }, 800);
                     
-                    // إظهار الرسالة الختامية
                     setTimeout(() => {
-                        finalMessage.classList.add('reveal');
+                        finalMessages.forEach(msg => msg.classList.add('reveal'));
                     }, 400);
 
                 }, 1200); 
-
             }, 10000); 
         });
     </script>
